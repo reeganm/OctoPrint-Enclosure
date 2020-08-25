@@ -37,7 +37,7 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin, octoprint.plugin.TemplateP
     temperature_sensor_data = []
     last_filament_end_detected = []
     print_complete = False
-    development_mode = False
+    development_mode = True
     dummy_value = 30.0
     dummy_delta = 0.5
 
@@ -1047,6 +1047,13 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin, octoprint.plugin.TemplateP
         except Exception as ex:
             self.log_error(ex)
 
+    def temperatures_received_hook_callback(self, comm, parsed_temps):
+        for sensor in self.rpi_inputs:
+            if sensor["plot_data"]:
+                parsed_temps.update({sensor['label']: (sensor['temp_sensor_temp'], 0)})
+        self._logger.info("Parsed Temps: {x}".format(x=parsed_temps))
+        return parsed_temps
+
     def get_linked_temp_sensor_data(self, linked_id):
         try:
             linked_data = [data for data in self.temperature_sensor_data if data['index_id'] == linked_id].pop()
@@ -1889,5 +1896,6 @@ def __plugin_load__():
     global __plugin_hooks__
     __plugin_hooks__ = {
         "octoprint.comm.protocol.gcode.queuing"       : __plugin_implementation__.hook_gcode_queuing,
-        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information,
+        "octoprint.comm.protocol.temperatures.received": __plugin_implementation__.temperatures_received_hook_callback
     }

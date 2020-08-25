@@ -448,6 +448,7 @@ $(function () {
         temp_sensor_humidity: ko.observable(""),
         ds18b20_serial: ko.observable(""),
         use_fahrenheit: ko.observable(false),
+        plot_data: ko.observable(false),
         action_type: ko.observable("output_control"),
         controlled_io: ko.observable(""),
         controlled_io_set_value: ko.observable("low"),

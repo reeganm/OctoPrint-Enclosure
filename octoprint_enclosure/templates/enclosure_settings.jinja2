@@ -621,6 +621,13 @@
         </label>
         <span class="help-inline">Choose if you want to work with Celsius or Fahrenheit</span>
       </div>
+      <div class="controls">
+        <label class="checkbox">
+          <input type="checkbox" data-bind="checked: plot_data"> {{ _('Plot Data') }}
+        </label>
+        <span class="help-inline">Choose if you want this temperature sensor to be plotted</span>
+      </div>
+      <!-- /ko -->
     </div>
     <!-- /ko -->
     <!-- ko if: ($data.input_type() == "gpio")  -->
