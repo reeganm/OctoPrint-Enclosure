@@ -107,15 +107,18 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin, octoprint.plugin.TemplateP
     # def get_sorting_key(self, context=None):
     #     return 0
 
-    def on_startup(self):
-        self.rpi_outputs = self._settings.get(["rpi_outputs"])
-        self.rpi_inputs = self._settings.get(["rpi_inputs"])
-        self.notifications = self._settings.get(["notifications"])
+    # def on_startup(self):
+    #     self.rpi_outputs = self._settings.get(["rpi_outputs"])
+    #     self.rpi_inputs = self._settings.get(["rpi_inputs"])
+    #     self.notifications = self._settings.get(["notifications"])
 
     def on_after_startup(self):
         self.pwm_instances = []
         self.event_queue = []
         self.rpi_outputs_not_changed = []
+        self.rpi_outputs = self._settings.get(["rpi_outputs"])
+        self.rpi_inputs = self._settings.get(["rpi_inputs"])
+        self.notifications = self._settings.get(["notifications"])
         self.generate_temp_hum_control_status()
         self.setup_gpio()
         self.configure_gpio()
