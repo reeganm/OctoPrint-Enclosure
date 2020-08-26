@@ -104,6 +104,9 @@ class EnclosurePlugin(octoprint.plugin.StartupPlugin, octoprint.plugin.TemplateP
         return -1
 
     # ~~ StartupPlugin mixin
+    def get_sorting_key(self):
+        return 0
+
     def on_startup(self):
         self.rpi_outputs = self._settings.get(["rpi_outputs"])
         self.rpi_inputs = self._settings.get(["rpi_inputs"])
